@@ -29,4 +29,7 @@ public abstract class GrowCell extends GameObject {
 	public int getHeight() {
 		return HEIGHT;
 	}
+	
+	public abstract boolean isPassable();
+	
 }

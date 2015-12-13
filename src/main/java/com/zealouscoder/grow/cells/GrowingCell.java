@@ -48,4 +48,9 @@ public class GrowingCell extends GrowCell {
 		visitor.update(dt, this);
 	}
 
+	@Override
+	public boolean isPassable() {
+		return true;
+	}
+
 }
