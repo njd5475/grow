@@ -52,9 +52,14 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		Graphics2D n = (Graphics2D) g.create();
 		center(n);
 		n.setColor(Color.white);
-		translateTo(n, cell);
-		n.fillRect(0, 0, cell.getWidth(), cell.getHeight());
+		translateToCentered(n, cell);
+		n.fillRect(-cell.getWidth()/2, -cell.getHeight()/2, cell.getWidth(), cell.getHeight());
 		n.dispose();
+	}
+
+	private void translateToCentered(Graphics2D n, GrowCell cell) {
+		n.translate(cell.getX() * GrowCell.WIDTH, cell.getY() * GrowCell.HEIGHT);
+		n.translate(GrowCell.WIDTH/2, GrowCell.HEIGHT/2);
 	}
 
 	private void center(Graphics2D n) {

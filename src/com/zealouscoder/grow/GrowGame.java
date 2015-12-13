@@ -5,6 +5,7 @@ public class GrowGame extends GameObject {
 	private boolean running = true;
 	private double gameclock;
 	private static final double fixedTimeStep = 0.12d;
+	private static final double GROWTH_RATE = 1.5;
 	private GrowGrid grid;
 
 	public GrowGame() {
@@ -13,7 +14,9 @@ public class GrowGame extends GameObject {
 	}
 
 	public void createGrowingCellAt(int x, int y) {
-		this.grid.set(new GrowingCell(x, y, 1, 10));
+		if (this.grid.getAt(x, y) == null) {
+			this.grid.set(new GrowingCell(x, y, 1, GROWTH_RATE));
+		}
 	}
 
 	public GrowGrid getGrid() {
@@ -41,25 +44,25 @@ public class GrowGame extends GameObject {
 	}
 
 	public void createEmptyCellAt(int x, int y) {
-		GrowCell at = grid.getAt(x,y);
-		if(at != null) {
+		GrowCell at = grid.getAt(x, y);
+		if (at != null) {
 			throw new UnsupportedOperationException("Cannot create a new cell where an old cell stands!");
 		}
 		grid.set(new EmptyCell(x, y));
 	}
-	
+
 	public void swapWithEmptyCell(GrowCell toSwap) {
 		int x = toSwap.getX();
 		int y = toSwap.getY();
-		GrowCell at = grid.getAt(x,y);
+		GrowCell at = grid.getAt(x, y);
 		swap(toSwap, new EmptyCell(x, y));
 	}
 
 	private void swap(GrowCell toSwap, GrowCell with) {
-		if(toSwap == null || with == null) {
+		if (toSwap == null || with == null) {
 			throw new NullPointerException("Cannot attempt to swap a null cell or replace a cell with a null cell!");
 		}
-		if(toSwap == with) {
+		if (toSwap == with) {
 			throw new UnsupportedOperationException("Swapping a cell with itself is redundant");
 		}
 		grid.set(with);

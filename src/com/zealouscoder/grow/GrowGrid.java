@@ -5,8 +5,6 @@ import java.util.Map;
 
 public class GrowGrid extends GameObject {
 
-	private static final int HALF_MAX = Integer.MAX_VALUE / 2;
-	private static final int CENTER_X = HALF_MAX, CENTER_Y = HALF_MAX;
 	private Map<Integer, GrowCell> cells = new HashMap<Integer, GrowCell>();
 
 	public GrowGrid() {
@@ -23,9 +21,7 @@ public class GrowGrid extends GameObject {
 	 * @return
 	 */
 	private static int calcIndex(int x, int y) {
-		x += HALF_MAX;
-		y += HALF_MAX;
-		return y * Integer.MAX_VALUE + x;
+		return String.format("%dx%d", x, y).hashCode();
 	}
 
 	public void set(GrowCell cell) {
@@ -45,7 +41,7 @@ public class GrowGrid extends GameObject {
 		visitor.render(this);
 	}
 
-	public GrowCell[] getCells() {
+	public synchronized GrowCell[] getCells() {
 		return cells.values().toArray(new GrowCell[cells.size()]);
 	}
 
