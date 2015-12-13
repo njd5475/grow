@@ -2,6 +2,9 @@ package com.zealouscoder.grow;
 
 import java.awt.Graphics2D;
 
+import com.zealouscoder.grow.cells.EmptyCell;
+import com.zealouscoder.grow.cells.GrowingCell;
+
 public interface RenderVisitor {
 
 	public void render(GrowGrid growGrid);

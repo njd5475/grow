@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import com.zealouscoder.grow.cells.EmptyCell;
+import com.zealouscoder.grow.cells.GrowCell;
+import com.zealouscoder.grow.cells.GrowingCell;
+
 public class GrowGame extends GameObject {
 
 	private boolean running = true;

@@ -1,5 +1,9 @@
 package com.zealouscoder.grow;
 
+import com.zealouscoder.grow.cells.EmptyCell;
+import com.zealouscoder.grow.cells.GrowCell;
+import com.zealouscoder.grow.cells.GrowingCell;
+
 public class DefaultUpdateVisitor implements UpdateVisitor {
 
 	private GrowGame game;

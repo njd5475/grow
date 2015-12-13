@@ -6,6 +6,10 @@ import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 
+import com.zealouscoder.grow.cells.EmptyCell;
+import com.zealouscoder.grow.cells.GrowCell;
+import com.zealouscoder.grow.cells.GrowingCell;
+
 public class DefaultRenderVisitor implements RenderVisitor {
 
 	private JFrame frame;

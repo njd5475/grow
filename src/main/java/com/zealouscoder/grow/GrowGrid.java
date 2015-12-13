@@ -3,6 +3,8 @@ package com.zealouscoder.grow;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zealouscoder.grow.cells.GrowCell;
+
 public class GrowGrid extends GameObject {
 
 	private Map<Integer, GrowCell> cells = new HashMap<Integer, GrowCell>();
