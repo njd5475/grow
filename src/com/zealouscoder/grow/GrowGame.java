@@ -5,7 +5,7 @@ public class GrowGame extends GameObject {
 	private boolean running = true;
 	private double gameclock;
 	private static final double fixedTimeStep = 0.12d;
-	private static double growthRate = 1.5;
+	private static double growthRate = 3d;
 	private GrowGrid grid;
 
 	public GrowGame() {
@@ -16,10 +16,12 @@ public class GrowGame extends GameObject {
 	public void createGrowingCellAt(int x, int y) {
 		if (this.grid.getAt(x, y) == null) {
 			this.grid.set(new GrowingCell(x, y, 1, growthRate));
-			
-			//decrease growth rate each time it grows by a small fraction
-			growthRate += growthRate * 0.0001;
 		}
+	}
+	
+	public void decreaseGrowthRate(double amount) {
+		//decrease growth rate each time it grows by a small fraction
+		growthRate += growthRate * amount;
 	}
 
 	public GrowGrid getGrid() {

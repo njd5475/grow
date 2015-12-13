@@ -10,4 +10,6 @@ public interface UpdateVisitor {
 
 	public void update(double dt, EmptyCell emptyCell);
 
+	public void update(double dt, Player player);
+
 }

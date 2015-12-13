@@ -11,13 +11,9 @@ public class DefaultRenderVisitor implements RenderVisitor {
 	private JFrame frame;
 	private Graphics2D g;
 	private Font derivedFont;
-	private int centerX;
-	private int centerY;
 
 	public DefaultRenderVisitor(JFrame frame) {
 		this.frame = frame;
-		this.centerX = frame.getWidth() / 2;
-		this.centerY = frame.getHeight() / 2;
 	}
 
 	@Override
@@ -61,11 +57,11 @@ public class DefaultRenderVisitor implements RenderVisitor {
 
 	private void translateToCentered(Graphics2D n, GrowCell cell) {
 		n.translate(cell.getX() * GrowCell.WIDTH, cell.getY() * GrowCell.HEIGHT);
-		n.translate(GrowCell.WIDTH/2, GrowCell.HEIGHT/2);
+		n.translate(GrowCell.WIDTH/2d, GrowCell.HEIGHT/2d);
 	}
 
 	private void center(Graphics2D n) {
-		n.translate(frame.getWidth() / 2, frame.getHeight() / 2);
+		n.translate(frame.getWidth() / 2d, frame.getHeight() / 2d);
 	}
 
 	@Override
@@ -80,6 +76,11 @@ public class DefaultRenderVisitor implements RenderVisitor {
 
 	private void translateTo(Graphics2D n, GrowCell growCell) {
 		n.translate(growCell.getX() * GrowCell.WIDTH, growCell.getY() * GrowCell.HEIGHT);
+	}
+
+	@Override
+	public void render(Player player) {
+		g.translate(player.getX()*GrowCell.HEIGHT, player.getY()*GrowCell.WIDTH);
 	}
 
 }

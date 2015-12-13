@@ -3,7 +3,8 @@ package com.zealouscoder.grow;
 public class DefaultUpdateVisitor implements UpdateVisitor {
 
 	private GrowGame game;
-
+	
+	
 	public DefaultUpdateVisitor(GrowGame game) {
 		this.game = game;
 	}
@@ -11,6 +12,7 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 	@Override
 	public void update(double dt, GrowGame growGame) {
 		growGame.getGrid().update(dt, this);
+		growGame.decreaseGrowthRate(dt * 0.001);
 	}
 
 	@Override
@@ -41,6 +43,12 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 	@Override
 	public void update(double dt, EmptyCell emptyCell) {
 		// do nothing with empty cells their empty
+	}
+
+	@Override
+	public void update(double dt, Player player) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

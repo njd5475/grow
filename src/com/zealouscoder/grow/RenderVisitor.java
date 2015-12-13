@@ -13,5 +13,7 @@ public interface RenderVisitor {
 	public void render(GrowingCell growingCell);
 
 	public void render(EmptyCell emptyCell);
+
+	public void render(Player player);
 	
 }
