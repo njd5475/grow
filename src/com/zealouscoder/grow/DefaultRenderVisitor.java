@@ -39,7 +39,9 @@ public class DefaultRenderVisitor implements RenderVisitor {
 			derivedFont = g.getFont().deriveFont(Font.BOLD, 24);
 		}
 		g.setFont(derivedFont);
-		g.drawString(String.format("%.02f", growGame.getGameClock()), 10, 2 + g.getFontMetrics().getHeight());
+		int currentLine = 0;
+		g.drawString(String.format("Game Time: %.02f", growGame.getGameClock()), 10, (++currentLine) * (2 + g.getFontMetrics().getHeight()));
+		g.drawString(String.format("Growth Rate: %.02f", growGame.getGrowthRate()), 10, (++currentLine) * (2 + g.getFontMetrics().getHeight()));
 	}
 
 	@Override
