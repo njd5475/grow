@@ -1,4 +1,4 @@
-# grow
+# GrowGridGrow
 Simple Cell Based Growing Game
 
 # To Run
