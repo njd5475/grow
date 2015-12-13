@@ -1,0 +1,20 @@
+
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'java'
+
+mainClassName = 'com.zealouscoder.grow.GrowGridGrow'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+jar {
+    baseName = "grow-grid-grow"
+    version = "0.1.0"
+}
