@@ -17,6 +17,9 @@ dependencies {
 jar {
     baseName = "grow-grid-grow"
     version = "0.1.0"
+    manifest {
+        attributes 'Main-Class': 'com.zealouscoder.grow.launchers.GrowGridGrow'
+    }
 }
 
 task wrapper(type: Wrapper) {
