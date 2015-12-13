@@ -20,7 +20,7 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 	public void update(double dt, GrowGame growGame) {
 		//check to exit game
 		if(growGame.isKeyUp(KeyEvent.VK_ESCAPE)) {
-			
+			System.exit(0);
 		}
 		
 		growGame.getGrid().update(dt, this);
@@ -74,6 +74,10 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 		// process movement change for player
 		if(game.isKeyDown(KeyEvent.VK_SPACE)) {
 			player.rotate();
+		}
+		
+		if(game.isKeyDown(KeyEvent.VK_ENTER)) {
+			player.dropItem(game);
 		}
 	}
 

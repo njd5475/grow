@@ -2,11 +2,14 @@ package com.zealouscoder.grow;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import com.zealouscoder.grow.cells.CellType;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
@@ -125,5 +128,23 @@ public class GrowGame extends GameObject {
 
 	public boolean isKeyUp(int keyCode) {
 		return buttonStatus.get(keyCode) != null && buttonStatus.get(keyCode) == KeyEvent.KEY_RELEASED;
+	}
+	
+	public GrowCell swapFor(CellType type, GrowCell cell) {
+		GrowCell newCell = createCell(type, cell.getX(), cell.getY());
+		swap(newCell, cell);
+		return newCell;
+	}
+	
+	public static GrowCell createCell(CellType type, int x, int y) {
+		Constructor<? extends GrowCell> k;
+		try {
+			k  = type.getCellClass().getConstructor(int.class, int.class);
+			return k.newInstance(x, y);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

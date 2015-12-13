@@ -5,15 +5,13 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
 
 public class DefaultRenderVisitor implements RenderVisitor {
 
+	private static final String HELP_STRING = "SPACE - ROTATE DIRECTION, ENTER - PLACE ITEM";
 	private Container frame;
 	private Font derivedFont;
 
@@ -32,6 +30,25 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		game.getGrid().render(this);
 		render(game.getCurrentPlayer());
 		drawGameClock(game);
+		drawControls();
+		drawPlayerGoals(game.getCurrentPlayer());
+		drawPlayerInventory(game.getCurrentPlayer());
+	}
+
+	private void drawPlayerInventory(Player currentPlayer) {
+		Graphics2D n = (Graphics2D) hudOverlay.create();
+		String item = "Inventory: "
+				+ (currentPlayer.getCurrentItem() == null ? "no-item" : currentPlayer.getCurrentItem().name());
+		n.drawString(item, 10, (int) ((frame.getHeight() * .2d) + n.getFontMetrics().getHeight() + 2));
+		n.dispose();
+	}
+
+	private void drawControls() {
+		double centeredX = frame.getWidth() / 2 - hudOverlay.getFontMetrics().stringWidth(HELP_STRING) / 2d;
+		Graphics2D n = (Graphics2D) hudOverlay.create();
+		n.translate(centeredX, frame.getHeight() - n.getFontMetrics().getHeight() - 2);
+		n.drawString(HELP_STRING, 0, 0);
+		n.dispose();
 	}
 
 	private void drawGameClock(GrowGame game) {
@@ -86,6 +103,12 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		n.fillRect(player.getX() * GrowCell.WIDTH, player.getY() * GrowCell.HEIGHT, GrowCell.WIDTH + 1,
 				GrowCell.HEIGHT + 1);
 		n.dispose();
+	}
+
+	private void drawPlayerGoals(Player player) {
+		hudOverlay.setColor(Color.blue);
+		hudOverlay.drawString("Current Goal: " + player.getGoal().toString(), 10,
+				(int) (frame.getHeight() * .2d) - (hudOverlay.getFontMetrics().getHeight() + 2));
 	}
 
 	@Override

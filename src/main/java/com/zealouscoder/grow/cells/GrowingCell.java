@@ -11,7 +11,7 @@ public class GrowingCell extends GrowCell {
 	private double TotalTimeToGrow;
 
 	public GrowingCell(int x, int y, double growRate, double timeToGrow) {
-		super(x, y);
+		super(CellType.GROWING, x, y);
 		this.growRate = growRate;
 		this.TotalTimeToGrow = timeToGrow;
 		this.timeToGrow = 0;
@@ -36,7 +36,7 @@ public class GrowingCell extends GrowCell {
 	public int getHeight() {
 		return (int) (super.getWidth() * (timeToGrow / TotalTimeToGrow));
 	}
-	
+
 	@Override
 	public void render(RenderVisitor visitor) {
 		visitor.render(this);
