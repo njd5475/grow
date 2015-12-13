@@ -43,7 +43,7 @@ public class GrowGridGrow extends JPanel {
 	public static void main(String[] args) {
 		final GrowGame game = new GrowGame();
 		JFrame frame = new JFrame("Grid Grow");
-		RenderVisitor renderer = new DefaultRenderVisitor(frame);
+		RenderVisitor renderer = new DefaultRenderVisitor(frame.getContentPane());
 		frame.setLayout(new BorderLayout());
 		frame.add(new GrowGridGrow(game, renderer));
 		frame.pack();
