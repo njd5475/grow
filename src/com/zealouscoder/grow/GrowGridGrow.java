@@ -11,12 +11,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class GrowTwo extends JPanel {
+public class GrowGridGrow extends JPanel {
 
 	private RenderVisitor renderer;
 	private GrowGame game;
 
-	public GrowTwo(GrowGame game, RenderVisitor renderer) {
+	public GrowGridGrow(GrowGame game, RenderVisitor renderer) {
 		this.renderer = renderer;
 		this.game = game;
 		setPreferredSize(new Dimension(1024, 768));
@@ -39,7 +39,7 @@ public class GrowTwo extends JPanel {
 		JFrame frame = new JFrame("Grid Grow");
 		RenderVisitor renderer = new DefaultRenderVisitor(frame);
 		frame.setLayout(new BorderLayout());
-		frame.add(new GrowTwo(game, renderer));
+		frame.add(new GrowGridGrow(game, renderer));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
