@@ -1,4 +1,4 @@
-package com.zealouscoder.grow;
+package com.zealouscoder.grow.launchers;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,6 +10,12 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.zealouscoder.grow.DefaultRenderVisitor;
+import com.zealouscoder.grow.DefaultUpdateVisitor;
+import com.zealouscoder.grow.GrowGame;
+import com.zealouscoder.grow.RenderVisitor;
+import com.zealouscoder.grow.UpdateVisitor;
 
 public class GrowGridGrow extends JPanel {
 

@@ -1,5 +1,7 @@
 package com.zealouscoder.grow;
 
+import java.awt.event.KeyEvent;
+
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
@@ -16,9 +18,15 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 
 	@Override
 	public void update(double dt, GrowGame growGame) {
+		//check to exit game
+		if(growGame.isKeyUp(KeyEvent.VK_ESCAPE)) {
+			
+		}
+		
 		growGame.getGrid().update(dt, this);
 		growGame.decreaseGrowthRate(dt * 0.001);
 		growGame.getCurrentPlayer().update(dt, this);
+		growGame.updateButtonStates();
 	}
 
 	@Override
@@ -61,6 +69,11 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 				player.moveToOtherSideOfGrid(game.getGrid());
 			}
 			playerMoveAccumulator -= player.getSpeed();
+		}
+		
+		// process movement change for player
+		if(game.isKeyDown(KeyEvent.VK_SPACE)) {
+			player.rotate();
 		}
 	}
 

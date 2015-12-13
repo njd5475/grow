@@ -1,6 +1,9 @@
 package com.zealouscoder.grow;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -17,6 +20,7 @@ public class GrowGame extends GameObject {
 	private GrowGrid grid;
 	private Player currentPlayer;
 	private Queue<ButtonEvent> buttonQueue = new ConcurrentLinkedQueue<ButtonEvent>();
+	private Map<Integer, Integer> buttonStatus = new HashMap<Integer, Integer>();
 
 	public GrowGame() {
 		this.currentPlayer = new Player();
@@ -46,7 +50,7 @@ public class GrowGame extends GameObject {
 	public double getGrowthRate() {
 		return growthRate;
 	}
-	
+
 	public Dimension getGridDimensions() {
 		return new Dimension(grid.getWidth(), grid.getHeight());
 	}
@@ -102,5 +106,24 @@ public class GrowGame extends GameObject {
 
 	public boolean hasCell(int x, int y) {
 		return grid.getAt(x, y) != null;
+	}
+
+	public void updateButtonStates() {
+		ButtonEvent event = null;
+
+		buttonStatus.clear();
+
+		// drain queue
+		while ((event = buttonQueue.poll()) != null) {
+			buttonStatus.put(event.getKeyCode(), event.getKeyStatus());
+		}
+	}
+
+	public boolean isKeyDown(int keyCode) {
+		return buttonStatus.get(keyCode) != null && buttonStatus.get(keyCode) == KeyEvent.KEY_PRESSED;
+	}
+
+	public boolean isKeyUp(int keyCode) {
+		return buttonStatus.get(keyCode) != null && buttonStatus.get(keyCode) == KeyEvent.KEY_RELEASED;
 	}
 }
