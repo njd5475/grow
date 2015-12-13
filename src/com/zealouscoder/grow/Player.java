@@ -62,4 +62,9 @@ public class Player extends GameObject {
 		x += dx;
 		y += dy;
 	}
+	
+	public void revertToLast() {
+		x = lastX;
+		y = lastY;
+	}
 }

@@ -46,23 +46,15 @@ public class GrowTwo extends JPanel {
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.VK_SPACE == e.getKeyCode()) {
-					game.button1Down();
-				}
-				if(e.VK_ENTER == e.getKeyCode()) {
-					game.button2Down();
-				}
+				// revert to old event
+				game.queueButtonEvent(KeyEvent.KEY_PRESSED, e.getKeyCode());
 				super.keyPressed(e);
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if(e.VK_SPACE == e.getKeyCode()) {
-					game.button1Up();
-				}
-				if(e.VK_ENTER == e.getKeyCode()) {
-					game.button2Up();
-				}
+				// revert to old event
+				game.queueButtonEvent(KeyEvent.KEY_RELEASED, e.getKeyCode());
 				super.keyReleased(e);
 			}
 		});

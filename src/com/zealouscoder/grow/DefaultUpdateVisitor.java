@@ -3,6 +3,7 @@ package com.zealouscoder.grow;
 public class DefaultUpdateVisitor implements UpdateVisitor {
 
 	private GrowGame game;
+	private double playerMoveAccumulator;
 	
 	
 	public DefaultUpdateVisitor(GrowGame game) {
@@ -13,6 +14,7 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 	public void update(double dt, GrowGame growGame) {
 		growGame.getGrid().update(dt, this);
 		growGame.decreaseGrowthRate(dt * 0.001);
+		growGame.getCurrentPlayer().update(dt, this);
 	}
 
 	@Override
@@ -47,8 +49,19 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 
 	@Override
 	public void update(double dt, Player player) {
-		// TODO Auto-generated method stub
+		playerMoveAccumulator += dt;
 		
+		while(playerMoveAccumulator > player.getSpeed()) {
+			player.moveInDirection();
+			if(game.hasCell(player.getX(), player.getY())) {
+				playerMoveAccumulator -= player.getSpeed();
+			}else{
+				//drain accumulator
+				playerMoveAccumulator = 0;
+				player.revertToLast();
+				break;
+			}
+		}
 	}
 
 }
