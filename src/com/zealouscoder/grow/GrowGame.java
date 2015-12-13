@@ -1,5 +1,6 @@
 package com.zealouscoder.grow;
 
+import java.awt.Dimension;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -40,6 +41,10 @@ public class GrowGame extends GameObject {
 
 	public double getGrowthRate() {
 		return growthRate;
+	}
+	
+	public Dimension getGridDimensions() {
+		return new Dimension(grid.getWidth(), grid.getHeight());
 	}
 
 	@Override

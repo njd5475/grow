@@ -6,6 +6,10 @@ import java.util.Map;
 public class GrowGrid extends GameObject {
 
 	private Map<Integer, GrowCell> cells = new HashMap<Integer, GrowCell>();
+	private int maxX = Integer.MIN_VALUE;
+	private int minX = Integer.MAX_VALUE;
+	private int maxY = Integer.MIN_VALUE;
+	private int minY = Integer.MAX_VALUE;
 
 	public GrowGrid() {
 
@@ -28,7 +32,13 @@ public class GrowGrid extends GameObject {
 		if (cell == null) {
 			throw new NullPointerException("Cannot set a cell to nothing!");
 		}
-		cells.put(calcIndex(cell.getX(), cell.getY()), cell);
+		int x = cell.getX();
+		int y = cell.getY();
+		maxX = Math.max(maxX, x);
+		minX = Math.min(minX, x);
+		maxY = Math.max(maxY, y);
+		minY = Math.min(minY, y);
+		cells.put(calcIndex(x, y), cell);
 	}
 
 	@Override
@@ -49,4 +59,11 @@ public class GrowGrid extends GameObject {
 		return cells.get(calcIndex(x, y));
 	}
 
+	public int getWidth() {
+		return maxX - minX + 1;
+	}
+	
+	public int getHeight() {
+		return maxY - minY + 1;
+	}
 }

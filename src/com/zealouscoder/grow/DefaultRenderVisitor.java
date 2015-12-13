@@ -10,7 +10,7 @@ public class DefaultRenderVisitor implements RenderVisitor {
 
 	private JFrame frame;
 	private Font derivedFont;
-	
+
 	private transient Graphics2D g;
 	private transient Graphics2D hudOverlay;
 	private transient GrowGame game;
@@ -39,8 +39,12 @@ public class DefaultRenderVisitor implements RenderVisitor {
 				(++currentLine) * (2 + g.getFontMetrics().getHeight()));
 		hudOverlay.drawString(String.format("Growth Rate: %.02f", game.getGrowthRate()), 10,
 				(++currentLine) * (2 + g.getFontMetrics().getHeight()));
+		hudOverlay.drawString(
+				String.format("Grid Size: %.00fx%.00f", game.getGridDimensions().getWidth(),
+						game.getGridDimensions().getHeight()),
+				10, (++currentLine) * (2 + g.getFontMetrics().getHeight()));
 	}
-	
+
 	@Override
 	public void render(GrowGrid growGrid) {
 		for (GrowCell cell : growGrid.getCells()) {
@@ -57,7 +61,6 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		n.fillRect(-cell.getWidth() / 2, -cell.getHeight() / 2, cell.getWidth(), cell.getHeight());
 		n.dispose();
 	}
-
 
 	@Override
 	public void render(EmptyCell emptyCell) {

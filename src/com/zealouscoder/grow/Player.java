@@ -67,4 +67,9 @@ public class Player extends GameObject {
 		x = lastX;
 		y = lastY;
 	}
+
+	public void moveToOtherSideOfGrid(GrowGrid grid) {
+		x -= dx * grid.getWidth();
+		y -= dy * grid.getHeight();
+	}
 }

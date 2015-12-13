@@ -53,14 +53,10 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 		
 		while(playerMoveAccumulator > player.getSpeed()) {
 			player.moveInDirection();
-			if(game.hasCell(player.getX(), player.getY())) {
-				playerMoveAccumulator -= player.getSpeed();
-			}else{
-				//drain accumulator
-				playerMoveAccumulator = 0;
-				player.revertToLast();
-				break;
+			if(!game.hasCell(player.getX(), player.getY())) {
+				player.moveToOtherSideOfGrid(game.getGrid());
 			}
+			playerMoveAccumulator -= player.getSpeed();
 		}
 	}
 
