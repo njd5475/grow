@@ -50,10 +50,29 @@ public class DefaultRenderVisitor implements RenderVisitor {
 	@Override
 	public void render(GrowingCell cell) {
 		Graphics2D n = (Graphics2D) g.create();
-		n.translate(frame.getWidth() / 2, frame.getHeight() / 2);
+		center(n);
 		n.setColor(Color.white);
-		n.fillRect(cell.getX() * GrowCell.WIDTH, cell.getY() * GrowCell.HEIGHT, cell.getWidth(), cell.getHeight());
+		translateTo(n, cell);
+		n.fillRect(0, 0, cell.getWidth(), cell.getHeight());
 		n.dispose();
+	}
+
+	private void center(Graphics2D n) {
+		n.translate(frame.getWidth() / 2, frame.getHeight() / 2);
+	}
+
+	@Override
+	public void render(EmptyCell emptyCell) {
+		Graphics2D n = (Graphics2D) g.create();
+		center(n);
+		n.setColor(Color.white);
+		translateTo(n, emptyCell);
+		n.drawRect(0, 0, emptyCell.getWidth(), emptyCell.getHeight());
+		n.dispose();
+	}
+
+	private void translateTo(Graphics2D n, GrowCell growCell) {
+		n.translate(growCell.getX() * GrowCell.WIDTH, growCell.getY() * GrowCell.HEIGHT);
 	}
 
 }

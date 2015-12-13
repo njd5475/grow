@@ -40,4 +40,28 @@ public class GrowGame extends GameObject {
 		return running = true;
 	}
 
+	public void createEmptyCellAt(int x, int y) {
+		GrowCell at = grid.getAt(x,y);
+		if(at != null) {
+			throw new UnsupportedOperationException("Cannot create a new cell where an old cell stands!");
+		}
+		grid.set(new EmptyCell(x, y));
+	}
+	
+	public void swapWithEmptyCell(GrowCell toSwap) {
+		int x = toSwap.getX();
+		int y = toSwap.getY();
+		GrowCell at = grid.getAt(x,y);
+		swap(toSwap, new EmptyCell(x, y));
+	}
+
+	private void swap(GrowCell toSwap, GrowCell with) {
+		if(toSwap == null || with == null) {
+			throw new NullPointerException("Cannot attempt to swap a null cell or replace a cell with a null cell!");
+		}
+		if(toSwap == with) {
+			throw new UnsupportedOperationException("Swapping a cell with itself is redundant");
+		}
+		grid.set(with);
+	}
 }

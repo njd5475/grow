@@ -23,8 +23,14 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 	@Override
 	public void update(double dt, GrowingCell growingCell) {
 		if(growingCell.isGrown()) {
-			
+			System.out.println("Cell has become fully grown");
+			game.swapWithEmptyCell(growingCell);
 		}
+	}
+
+	@Override
+	public void update(double dt, EmptyCell emptyCell) {
+		// do nothing with empty cells their empty
 	}
 
 }

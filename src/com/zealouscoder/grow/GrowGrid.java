@@ -49,4 +49,8 @@ public class GrowGrid extends GameObject {
 		return cells.values().toArray(new GrowCell[cells.size()]);
 	}
 
+	public GrowCell getAt(int x, int y) {
+		return cells.get(calcIndex(x, y));
+	}
+
 }

@@ -5,12 +5,12 @@ public class GrowingCell extends GrowCell {
 	// default in seconds
 	private double growRate = 1;
 	private double timeToGrow;
-	private double initialTimeToGrow;
+	private double TotalTimeToGrow;
 
 	public GrowingCell(int x, int y, double growRate, double timeToGrow) {
 		super(x, y);
 		this.growRate = growRate;
-		this.initialTimeToGrow = timeToGrow;
+		this.TotalTimeToGrow = timeToGrow;
 		this.timeToGrow = 0;
 	}
 
@@ -23,15 +23,15 @@ public class GrowingCell extends GrowCell {
 	}
 
 	public boolean isGrown() {
-		return timeToGrow <= 0;
+		return timeToGrow >= TotalTimeToGrow;
 	}
 
 	public int getWidth() {
-		return (int) (super.getWidth() * (timeToGrow / initialTimeToGrow));
+		return (int) (super.getWidth() * (timeToGrow / TotalTimeToGrow));
 	}
 
 	public int getHeight() {
-		return (int) (super.getWidth() * (timeToGrow / initialTimeToGrow));
+		return (int) (super.getWidth() * (timeToGrow / TotalTimeToGrow));
 	}
 	
 	@Override

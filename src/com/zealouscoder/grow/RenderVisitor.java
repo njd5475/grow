@@ -11,5 +11,7 @@ public interface RenderVisitor {
 	public void setGraphics(Graphics2D g2d);
 
 	public void render(GrowingCell growingCell);
+
+	public void render(EmptyCell emptyCell);
 	
 }

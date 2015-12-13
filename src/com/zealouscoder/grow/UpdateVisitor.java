@@ -8,4 +8,6 @@ public interface UpdateVisitor {
 
 	public void update(double dt, GrowingCell growingCell);
 
+	public void update(double dt, EmptyCell emptyCell);
+
 }
