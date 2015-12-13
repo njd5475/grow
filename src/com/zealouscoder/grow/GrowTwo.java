@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -41,8 +43,31 @@ public class GrowTwo extends JPanel {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		frame.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.VK_SPACE == e.getKeyCode()) {
+					game.button1Down();
+				}
+				if(e.VK_ENTER == e.getKeyCode()) {
+					game.button2Down();
+				}
+				super.keyPressed(e);
+			}
 
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.VK_SPACE == e.getKeyCode()) {
+					game.button1Up();
+				}
+				if(e.VK_ENTER == e.getKeyCode()) {
+					game.button2Up();
+				}
+				super.keyReleased(e);
+			}
+		});
+		frame.setVisible(true);
+		
 		UpdateVisitor updater = new DefaultUpdateVisitor(game);
 		(new Thread() {
 			public void run() {

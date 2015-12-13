@@ -7,10 +7,46 @@ public class GrowGame extends GameObject {
 	private static final double fixedTimeStep = 0.12d;
 	private static double growthRate = 3d;
 	private GrowGrid grid;
+	private Player currentPlayer;
+	private boolean button1_down = false;
+	private boolean button2_down = false;
 
 	public GrowGame() {
+		this.currentPlayer = new Player();
 		this.grid = new GrowGrid();
 		createGrowingCellAt(0, 0);
+	}
+
+	public void button1Down() {
+		button1_down = true;
+	}
+
+	public void button1Up() {
+		button1_down = false;
+	}
+
+	public void button2Down() {
+		button2_down = true;
+	}
+	
+	public void button2Up() {
+		button2_down = false;
+	}
+	
+	public boolean isButton1Down() {
+		return button1_down;
+	}
+	
+	public boolean isButton2Down() {
+		return button2_down;
+	}
+	
+	public boolean isButton1Up() {
+		return !button1_down;
+	}
+	
+	public boolean isButton2Up() {
+		return !button2_down;
 	}
 
 	public void createGrowingCellAt(int x, int y) {
@@ -18,9 +54,9 @@ public class GrowGame extends GameObject {
 			this.grid.set(new GrowingCell(x, y, 1, growthRate));
 		}
 	}
-	
+
 	public void decreaseGrowthRate(double amount) {
-		//decrease growth rate each time it grows by a small fraction
+		// decrease growth rate each time it grows by a small fraction
 		growthRate += growthRate * amount;
 	}
 
@@ -31,7 +67,7 @@ public class GrowGame extends GameObject {
 	public double getGameClock() {
 		return gameclock;
 	}
-	
+
 	public double getGrowthRate() {
 		return growthRate;
 	}
@@ -75,5 +111,9 @@ public class GrowGame extends GameObject {
 			throw new UnsupportedOperationException("Swapping a cell with itself is redundant");
 		}
 		grid.set(with);
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 }

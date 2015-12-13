@@ -24,20 +24,24 @@ public class DefaultRenderVisitor implements RenderVisitor {
 	}
 
 	@Override
-	public void render(GrowGame growGame) {
-		growGame.getGrid().render(this);
-		drawGameClock(growGame);
+	public void render(GrowGame game) {
+		translateToPlayer(game.getCurrentPlayer());
+		game.getGrid().render(this);
+		render(game.getCurrentPlayer());
+		drawGameClock(game);
 	}
 
-	private void drawGameClock(GrowGame growGame) {
+	private void drawGameClock(GrowGame game) {
 		g.setColor(Color.blue);
 		if (derivedFont == null) {
 			derivedFont = g.getFont().deriveFont(Font.BOLD, 24);
 		}
 		g.setFont(derivedFont);
 		int currentLine = 0;
-		g.drawString(String.format("Game Time: %.02f", growGame.getGameClock()), 10, (++currentLine) * (2 + g.getFontMetrics().getHeight()));
-		g.drawString(String.format("Growth Rate: %.02f", growGame.getGrowthRate()), 10, (++currentLine) * (2 + g.getFontMetrics().getHeight()));
+		g.drawString(String.format("Game Time: %.02f", game.getGameClock()), 10,
+				(++currentLine) * (2 + g.getFontMetrics().getHeight()));
+		g.drawString(String.format("Growth Rate: %.02f", game.getGrowthRate()), 10,
+				(++currentLine) * (2 + g.getFontMetrics().getHeight()));
 	}
 
 	@Override
@@ -51,13 +55,13 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		center(n);
 		n.setColor(Color.white);
 		translateToCentered(n, cell);
-		n.fillRect(-cell.getWidth()/2, -cell.getHeight()/2, cell.getWidth(), cell.getHeight());
+		n.fillRect(-cell.getWidth() / 2, -cell.getHeight() / 2, cell.getWidth(), cell.getHeight());
 		n.dispose();
 	}
 
 	private void translateToCentered(Graphics2D n, GrowCell cell) {
 		n.translate(cell.getX() * GrowCell.WIDTH, cell.getY() * GrowCell.HEIGHT);
-		n.translate(GrowCell.WIDTH/2d, GrowCell.HEIGHT/2d);
+		n.translate(GrowCell.WIDTH / 2d, GrowCell.HEIGHT / 2d);
 	}
 
 	private void center(Graphics2D n) {
@@ -80,7 +84,15 @@ public class DefaultRenderVisitor implements RenderVisitor {
 
 	@Override
 	public void render(Player player) {
-		g.translate(player.getX()*GrowCell.HEIGHT, player.getY()*GrowCell.WIDTH);
+		Graphics2D n = (Graphics2D) g.create();
+		center(n);
+		n.setColor(Color.blue);
+		n.fillRect(player.getX() * GrowCell.WIDTH, player.getY() * GrowCell.HEIGHT, GrowCell.WIDTH + 1,
+				GrowCell.HEIGHT + 1);
+		n.dispose();
 	}
 
+	private void translateToPlayer(Player player) {
+		g.translate(player.getX() * GrowCell.HEIGHT, player.getY() * GrowCell.WIDTH);
+	}
 }
