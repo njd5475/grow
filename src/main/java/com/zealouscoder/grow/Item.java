@@ -1,15 +1,18 @@
 package com.zealouscoder.grow;
 
 import com.zealouscoder.grow.cells.CellType;
-import com.zealouscoder.grow.cells.GrowCell;
-import com.zealouscoder.grow.cells.LifeCell;
 
 public enum Item {
-	LIFE(CellType.LIFE);
-	
+	LIFE(CellType.LIFE),
+	NONE(CellType.EMPTY);
+
 	private CellType type;
 
 	Item(CellType type) {
 		this.type = type;
+	}
+
+	public CellType getType() {
+		return type;
 	}
 }

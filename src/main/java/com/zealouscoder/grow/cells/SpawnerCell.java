@@ -66,4 +66,9 @@ public class SpawnerCell extends GrowCell {
 		return null;
 	}
 
+	public void reset(int i) {
+		this.rate = i;
+		this.timeToSpawn = this.rate;
+	}
+
 }

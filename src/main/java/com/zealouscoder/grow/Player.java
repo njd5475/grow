@@ -108,4 +108,9 @@ public class Player extends GameObject {
 	public Item getCurrentItem() {
 		return inventory;
 	}
+
+	public void useItem(GrowGame growGame) {
+		growGame.swapFor(getCurrentItem().getType(), getX(), getY());
+		inventory = Item.NONE;
+	}
 }

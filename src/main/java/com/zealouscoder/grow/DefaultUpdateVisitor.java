@@ -34,7 +34,7 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 		}
 		growGame.drainSpawnQueue();
 		
-		if(growGame.hasLife() && growGame.getGameClock() > 60d && growGame.deathHasEmerged()) {
+		if(growGame.hasLife() && growGame.getGameClock() > 60d && !growGame.deathHasEmerged()) {
 			growGame.makeDeath();
 		}
 	}

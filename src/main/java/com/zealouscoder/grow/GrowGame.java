@@ -31,8 +31,8 @@ public class GrowGame extends GameObject {
 	private Queue<GameObject> spawnQueue = new ConcurrentLinkedQueue<GameObject>();
 	private Map<Integer, Integer> buttonStatus = new HashMap<Integer, Integer>();
 	private Set<GameObject> objects = new HashSet<GameObject>();
-	private boolean hasLife;
-	private boolean deathEmerged;
+	private boolean hasLife = false;
+	private boolean deathEmerged = false;
 	private Random rnd = new Random(System.currentTimeMillis());
 
 	public GrowGame() {
@@ -157,20 +157,18 @@ public class GrowGame extends GameObject {
 		return newCell;
 	}
 
-	public static GrowCell createCell(CellType type, int x, int y) {
-		Constructor<? extends GrowCell> k;
-		try {
-			k = type.getCellClass().getConstructor(int.class, int.class);
-			return k.newInstance(x, y);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public GrowCell swapFor(CellType type, int x, int y) {
+		GrowCell newCell = createCell(type, x, y);
+		swap(newCell, grid.getAt(x,y));
+		return newCell;
 	}
 
 	public void add(GameObject go) {
 		spawnQueue.add(go);
+	}
+	
+	public void placeItem(Player player) {
+		player.useItem(this);
 	}
 
 	public boolean hasLife() {
@@ -193,13 +191,29 @@ public class GrowGame extends GameObject {
 			int y = nextInt / grid.getWidth();
 			int x = nextInt - y * grid.getWidth();
 			if (grid.is(CellType.EMPTY, x, y)) {
-				grid.addTo(new SpawnerCell(x, y, new GameObjectFactory() {
+				SpawnerCell spawner = new SpawnerCell(x, y, new GameObjectFactory() {
 					@Override
 					public GameObject newObject(SpawnerCell spawner, GrowGame game) {
 						return new Necromonger(spawner.getX(), spawner.getY());
 					}
-				}));
+				});
+				spawner.reset(rnd.nextInt(30)+10);
+				spawner.activate();
+				grid.addTo(spawner);
 			}
 		}
+		deathEmerged = true;
+	}
+	
+	private static GrowCell createCell(CellType type, int x, int y) {
+		Constructor<? extends GrowCell> k;
+		try {
+			k = type.getCellClass().getConstructor(int.class, int.class);
+			return k.newInstance(x, y);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

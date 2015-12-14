@@ -3,7 +3,6 @@ package com.zealouscoder.grow.animals;
 import com.zealouscoder.grow.Animal;
 import com.zealouscoder.grow.RenderVisitor;
 import com.zealouscoder.grow.UpdateVisitor;
-import com.zealouscoder.grow.cells.GrowCell;
 
 public class Necromonger extends Animal {
 
