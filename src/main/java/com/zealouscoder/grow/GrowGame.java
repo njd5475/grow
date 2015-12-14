@@ -210,8 +210,7 @@ public class GrowGame extends GameObject {
 		try {
 			k = type.getCellClass().getConstructor(int.class, int.class);
 			return k.newInstance(x, y);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
