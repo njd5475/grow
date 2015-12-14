@@ -2,6 +2,7 @@ package com.zealouscoder.grow;
 
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowingCell;
+import com.zealouscoder.grow.cells.SpawnerCell;
 
 public interface UpdateVisitor {
 
@@ -14,5 +15,7 @@ public interface UpdateVisitor {
 	public void update(double dt, EmptyCell emptyCell);
 
 	public void update(double dt, Player player);
+
+	public void update(double dt, SpawnerCell spawnerCell);
 
 }

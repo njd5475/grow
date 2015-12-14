@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
+import com.zealouscoder.grow.cells.SpawnerCell;
 
 public class DefaultUpdateVisitor implements UpdateVisitor {
 
@@ -27,6 +28,10 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 		growGame.decreaseGrowthRate(dt * 0.001);
 		growGame.getCurrentPlayer().update(dt, this);
 		growGame.updateButtonStates();
+		for(GameObject obj : growGame.getObjects()) {
+			obj.update(dt, this);
+		}
+		growGame.drainSpawnQueue();
 	}
 
 	@Override
@@ -78,6 +83,14 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 		
 		if(game.isKeyDown(KeyEvent.VK_ENTER)) {
 			player.dropItem(game);
+		}
+	}
+
+	@Override
+	public void update(double dt, SpawnerCell spawnerCell) {
+		GameObject go = spawnerCell.spawn(dt, game);
+		if(go != null) {
+			game.add(go);
 		}
 	}
 

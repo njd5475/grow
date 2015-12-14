@@ -5,8 +5,10 @@ import java.awt.event.KeyEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.zealouscoder.grow.cells.CellType;
@@ -23,12 +25,25 @@ public class GrowGame extends GameObject {
 	private GrowGrid grid;
 	private Player currentPlayer;
 	private Queue<ButtonEvent> buttonQueue = new ConcurrentLinkedQueue<ButtonEvent>();
+	private Queue<GameObject> spawnQueue = new ConcurrentLinkedQueue<GameObject>();
 	private Map<Integer, Integer> buttonStatus = new HashMap<Integer, Integer>();
-
+	private Set<GameObject> objects = new HashSet<GameObject>();
+	
 	public GrowGame() {
 		this.currentPlayer = new Player();
 		this.grid = new GrowGrid();
 		createGrowingCellAt(0, 0);
+	}
+	
+	public void drainSpawnQueue() {
+		GameObject object=  null;
+		while((object = spawnQueue.poll()) != null) {
+			objects.add(object);
+		}
+	}
+	
+	public Set<GameObject> getObjects() {
+		return objects;
 	}
 
 	public void createGrowingCellAt(int x, int y) {
@@ -146,5 +161,9 @@ public class GrowGame extends GameObject {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void add(GameObject go) {
+		spawnQueue.add(go);
 	}
 }

@@ -1,10 +1,19 @@
 package com.zealouscoder.grow.cells;
 
+import java.util.Comparator;
+
 import com.zealouscoder.grow.GameObject;
 
 public abstract class GrowCell extends GameObject {
 	public static final int WIDTH = 16;
 	public static final int HEIGHT = 16;
+	public static final Comparator<? super GrowCell> LAYER_SORTED = new Comparator<GrowCell>() {
+
+		@Override
+		public int compare(GrowCell o1, GrowCell o2) {
+			return 0;
+		}
+	};
 
 	private int x = 0;
 	private int y = 0;
@@ -14,6 +23,10 @@ public abstract class GrowCell extends GameObject {
 		this.x = x;
 		this.y = y;
 		this.type = type;
+	}
+	
+	public int getLayer() {
+		return type.getLayer();
 	}
 
 	public CellType getType() {
@@ -37,5 +50,9 @@ public abstract class GrowCell extends GameObject {
 	}
 
 	public abstract boolean isPassable();
+
+	public boolean isContainer() {
+		return false;
+	}
 
 }

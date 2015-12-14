@@ -3,6 +3,7 @@ package com.zealouscoder.grow;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zealouscoder.grow.cells.CellContainer;
 import com.zealouscoder.grow.cells.GrowCell;
 
 public class GrowGrid extends GameObject {
@@ -28,6 +29,23 @@ public class GrowGrid extends GameObject {
 	 */
 	private static int calcIndex(int x, int y) {
 		return String.format("%dx%d", x, y).hashCode();
+	}
+
+	public void addTo(GrowCell cell) {
+		if(hasCell(cell)) {
+			CellContainer container = null;
+			if(getAt(cell).isContainer()) {
+				container = (CellContainer) getAt(cell);
+			}else{
+				container = new CellContainer(cell.getX(), cell.getY());
+				container.add(getAt(cell));
+			}
+			container.add(cell);
+		}
+	}
+
+	private GrowCell getAt(GrowCell cell) {
+		return getAt(cell.getX(), cell.getY());
 	}
 
 	public void set(GrowCell cell) {
@@ -57,6 +75,11 @@ public class GrowGrid extends GameObject {
 		return cells.values().toArray(new GrowCell[cells.size()]);
 	}
 
+	public boolean hasCell(GrowCell cell) {
+		GrowCell cellAt = getAt(cell.getX(), cell.getY());
+		return cellAt != null && cellAt != cell;
+	}
+
 	public GrowCell getAt(int x, int y) {
 		return cells.get(calcIndex(x, y));
 	}
@@ -64,7 +87,7 @@ public class GrowGrid extends GameObject {
 	public int getWidth() {
 		return maxX - minX + 1;
 	}
-	
+
 	public int getHeight() {
 		return maxY - minY + 1;
 	}
