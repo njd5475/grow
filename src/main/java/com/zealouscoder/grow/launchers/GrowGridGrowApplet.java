@@ -35,7 +35,7 @@ public class GrowGridGrowApplet extends JApplet {
 				super.keyReleased(e);
 			}
 		});
-		UpdateVisitor updater = new DefaultUpdateVisitor(game);
+		final UpdateVisitor updater = new DefaultUpdateVisitor(game);
 		(new Thread() {
 			public void run() {
 				Object lock = new Object();

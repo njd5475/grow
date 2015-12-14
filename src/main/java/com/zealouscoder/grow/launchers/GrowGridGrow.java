@@ -42,7 +42,7 @@ public class GrowGridGrow extends JPanel {
 
 	public static void main(String[] args) {
 		final GrowGame game = new GrowGame();
-		JFrame frame = new JFrame("Grid Grow");
+		final JFrame frame = new JFrame("Grid Grow");
 		RenderVisitor renderer = new DefaultRenderVisitor(frame.getContentPane());
 		frame.setLayout(new BorderLayout());
 		frame.add(new GrowGridGrow(game, renderer));
@@ -66,7 +66,7 @@ public class GrowGridGrow extends JPanel {
 		});
 		frame.setVisible(true);
 		
-		UpdateVisitor updater = new DefaultUpdateVisitor(game);
+		final UpdateVisitor updater = new DefaultUpdateVisitor(game);
 		(new Thread() {
 			public void run() {
 				Object lock = new Object();
