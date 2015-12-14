@@ -16,14 +16,16 @@ public class LifeCell extends GrowCell {
 
 	@Override
 	public void render(RenderVisitor visitor) {
-		// TODO Auto-generated method stub
-
+		visitor.render(this);
 	}
 
 	@Override
 	public void update(double dt, UpdateVisitor visitor) {
-		// TODO Auto-generated method stub
-
+		visitor.update(dt, this);
+	}
+	
+	public boolean isAlive() {
+		return true;
 	}
 
 }

@@ -3,8 +3,10 @@ package com.zealouscoder.grow;
 import java.awt.Graphics2D;
 
 import com.zealouscoder.grow.animals.Necromonger;
+import com.zealouscoder.grow.cells.CellContainer;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowingCell;
+import com.zealouscoder.grow.cells.LifeCell;
 
 public interface RenderVisitor {
 
@@ -21,5 +23,9 @@ public interface RenderVisitor {
 	public void render(Player player);
 
 	public void render(Necromonger necromonger);
+
+	public void render(CellContainer cellContainer);
+
+	public void render(LifeCell lifeCell);
 	
 }

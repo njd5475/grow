@@ -11,7 +11,19 @@ public abstract class GrowCell extends GameObject {
 
 		@Override
 		public int compare(GrowCell o1, GrowCell o2) {
-			return 0;
+			if(o1.getLayer() == o2.getLayer()) {
+				if(o1.getX() == o2.getX()) {
+					if(o1.getY() == o2.getY()) {
+						return 0;
+					}else{
+						return o1.getY() - o2.getY();
+					}
+				}else{
+					return o1.getX() - o2.getX();
+				}
+			}
+				
+			return o1.getLayer() - o2.getLayer();
 		}
 	};
 
@@ -52,6 +64,10 @@ public abstract class GrowCell extends GameObject {
 	public abstract boolean isPassable();
 
 	public boolean isContainer() {
+		return false;
+	}
+
+	public boolean isAlive() {
 		return false;
 	}
 

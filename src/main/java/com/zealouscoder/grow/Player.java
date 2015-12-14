@@ -102,7 +102,7 @@ public class Player extends GameObject {
 	}
 
 	public void dropItem(GrowGame game) {
-		
+		useItem(game);
 	}
 
 	public Item getCurrentItem() {

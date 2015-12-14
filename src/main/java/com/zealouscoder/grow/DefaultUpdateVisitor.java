@@ -3,9 +3,11 @@ package com.zealouscoder.grow;
 import java.awt.event.KeyEvent;
 
 import com.zealouscoder.grow.animals.Necromonger;
+import com.zealouscoder.grow.cells.CellContainer;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
+import com.zealouscoder.grow.cells.LifeCell;
 import com.zealouscoder.grow.cells.SpawnerCell;
 
 public class DefaultUpdateVisitor implements UpdateVisitor {
@@ -34,7 +36,7 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 		}
 		growGame.drainSpawnQueue();
 		
-		if(growGame.hasLife() && growGame.getGameClock() > 60d && !growGame.deathHasEmerged()) {
+		if(!growGame.hasLife() && growGame.getGameClock() > 10d && !growGame.deathHasEmerged()) {
 			growGame.makeDeath();
 		}
 	}
@@ -86,7 +88,7 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 			player.rotate();
 		}
 		
-		if(game.isKeyDown(KeyEvent.VK_ENTER)) {
+		if(game.isKeyUp(KeyEvent.VK_ENTER)) {
 			player.dropItem(game);
 		}
 	}
@@ -101,6 +103,19 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 
 	@Override
 	public void update(double dt, Necromonger necromonger) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(double dt, CellContainer cellContainer) {
+		for(GrowCell cell : cellContainer.getCells()) {
+			cell.update(dt, this);
+		}
+	}
+
+	@Override
+	public void update(double dt, LifeCell lifeCell) {
 		// TODO Auto-generated method stub
 		
 	}

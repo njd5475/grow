@@ -31,7 +31,6 @@ public class GrowGame extends GameObject {
 	private Queue<GameObject> spawnQueue = new ConcurrentLinkedQueue<GameObject>();
 	private Map<Integer, Integer> buttonStatus = new HashMap<Integer, Integer>();
 	private Set<GameObject> objects = new HashSet<GameObject>();
-	private boolean hasLife = false;
 	private boolean deathEmerged = false;
 	private Random rnd = new Random(System.currentTimeMillis());
 
@@ -159,7 +158,7 @@ public class GrowGame extends GameObject {
 
 	public GrowCell swapFor(CellType type, int x, int y) {
 		GrowCell newCell = createCell(type, x, y);
-		swap(newCell, grid.getAt(x,y));
+		swap(grid.getAt(x,y), newCell);
 		return newCell;
 	}
 
@@ -172,7 +171,7 @@ public class GrowGame extends GameObject {
 	}
 
 	public boolean hasLife() {
-		return hasLife;
+		return grid.hasLife();
 	}
 
 	public boolean deathHasEmerged() {
@@ -180,16 +179,19 @@ public class GrowGame extends GameObject {
 	}
 
 	public void makeDeath() {
-		int width = grid.getWidth();
-		int height = grid.getHeight();
+		int width = grid.getWidth()-1;
+		int height = grid.getHeight()-1;
 		int total = width * height;
-		double percentageOfTotal = total * 0.05d;
+		double percentageOfTotal = total * 0.1d;
 		int num = (int) Math.ceil(percentageOfTotal);
+		System.out.println("Spawning " + num + " monster spawners");
 		for (int i = 0; i < num; ++i) {
 			// spawn somewhere
 			int nextInt = rnd.nextInt(total);
-			int y = nextInt / grid.getWidth();
-			int x = nextInt - y * grid.getWidth();
+			int y = nextInt / width;
+			int x = nextInt - y * width;
+			x -= width/2;
+			y -= height/2;
 			if (grid.is(CellType.EMPTY, x, y)) {
 				SpawnerCell spawner = new SpawnerCell(x, y, new GameObjectFactory() {
 					@Override
@@ -200,6 +202,7 @@ public class GrowGame extends GameObject {
 				spawner.reset(rnd.nextInt(30)+10);
 				spawner.activate();
 				grid.addTo(spawner);
+				System.out.println("Created spawner");
 			}
 		}
 		deathEmerged = true;

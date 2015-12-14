@@ -25,22 +25,31 @@ public class CellContainer extends GrowCell {
 	public Set<GrowCell> getCells() {
 		return cells;
 	}
+	
+	
+
+	@Override
+	public boolean isContainer() {
+		return true;
+	}
 
 	@Override
 	public boolean isPassable() {
-		// TODO Auto-generated method stub
-		return false;
+		for(GrowCell cell : cells) {
+			if(!cell.isPassable()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public void render(RenderVisitor visitor) {
-		// TODO Auto-generated method stub
-
+		visitor.render(this);
 	}
 
 	@Override
 	public void update(double dt, UpdateVisitor visitor) {
-		// TODO Auto-generated method stub
-
+		visitor.update(dt, this);
 	}
 }

@@ -1,8 +1,10 @@
 package com.zealouscoder.grow;
 
 import com.zealouscoder.grow.animals.Necromonger;
+import com.zealouscoder.grow.cells.CellContainer;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowingCell;
+import com.zealouscoder.grow.cells.LifeCell;
 import com.zealouscoder.grow.cells.SpawnerCell;
 
 public interface UpdateVisitor {
@@ -20,5 +22,9 @@ public interface UpdateVisitor {
 	public void update(double dt, SpawnerCell spawnerCell);
 
 	public void update(double dt, Necromonger necromonger);
+
+	public void update(double dt, CellContainer cellContainer);
+
+	public void update(double dt, LifeCell lifeCell);
 
 }

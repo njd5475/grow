@@ -6,9 +6,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.zealouscoder.grow.animals.Necromonger;
+import com.zealouscoder.grow.cells.CellContainer;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
+import com.zealouscoder.grow.cells.LifeCell;
 
 public class DefaultRenderVisitor implements RenderVisitor {
 
@@ -143,6 +145,23 @@ public class DefaultRenderVisitor implements RenderVisitor {
 
 	private void translateToPlayer(Graphics2D n, Player player) {
 		n.translate(-player.getX() * GrowCell.HEIGHT, -player.getY() * GrowCell.WIDTH);
+	}
+
+	@Override
+	public void render(CellContainer cellContainer) {
+		for(GrowCell cell : cellContainer.getCells()) {
+			cell.render(this);
+		}
+	}
+
+	@Override
+	public void render(LifeCell lifeCell) {
+		Graphics2D n = (Graphics2D) g.create();
+		center(n);
+		n.setColor(Color.gray.darker());
+		translateTo(n, lifeCell);
+		n.fillRect(0, 0, lifeCell.getWidth(), lifeCell.getHeight());
+		n.dispose();
 	}
 
 }
