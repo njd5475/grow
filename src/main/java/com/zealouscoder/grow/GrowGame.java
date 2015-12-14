@@ -8,13 +8,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import com.zealouscoder.grow.animals.Necromonger;
 import com.zealouscoder.grow.cells.CellType;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
+import com.zealouscoder.grow.cells.SpawnerCell;
 
 public class GrowGame extends GameObject {
 
@@ -28,20 +31,23 @@ public class GrowGame extends GameObject {
 	private Queue<GameObject> spawnQueue = new ConcurrentLinkedQueue<GameObject>();
 	private Map<Integer, Integer> buttonStatus = new HashMap<Integer, Integer>();
 	private Set<GameObject> objects = new HashSet<GameObject>();
-	
+	private boolean hasLife;
+	private boolean deathEmerged;
+	private Random rnd = new Random(System.currentTimeMillis());
+
 	public GrowGame() {
 		this.currentPlayer = new Player();
 		this.grid = new GrowGrid();
 		createGrowingCellAt(0, 0);
 	}
-	
+
 	public void drainSpawnQueue() {
-		GameObject object=  null;
-		while((object = spawnQueue.poll()) != null) {
+		GameObject object = null;
+		while ((object = spawnQueue.poll()) != null) {
 			objects.add(object);
 		}
 	}
-	
+
 	public Set<GameObject> getObjects() {
 		return objects;
 	}
@@ -144,20 +150,20 @@ public class GrowGame extends GameObject {
 	public boolean isKeyUp(int keyCode) {
 		return buttonStatus.get(keyCode) != null && buttonStatus.get(keyCode) == KeyEvent.KEY_RELEASED;
 	}
-	
+
 	public GrowCell swapFor(CellType type, GrowCell cell) {
 		GrowCell newCell = createCell(type, cell.getX(), cell.getY());
 		swap(newCell, cell);
 		return newCell;
 	}
-	
+
 	public static GrowCell createCell(CellType type, int x, int y) {
 		Constructor<? extends GrowCell> k;
 		try {
-			k  = type.getCellClass().getConstructor(int.class, int.class);
+			k = type.getCellClass().getConstructor(int.class, int.class);
 			return k.newInstance(x, y);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -165,5 +171,35 @@ public class GrowGame extends GameObject {
 
 	public void add(GameObject go) {
 		spawnQueue.add(go);
+	}
+
+	public boolean hasLife() {
+		return hasLife;
+	}
+
+	public boolean deathHasEmerged() {
+		return deathEmerged;
+	}
+
+	public void makeDeath() {
+		int width = grid.getWidth();
+		int height = grid.getHeight();
+		int total = width * height;
+		double percentageOfTotal = total * 0.05d;
+		int num = (int) Math.ceil(percentageOfTotal);
+		for (int i = 0; i < num; ++i) {
+			// spawn somewhere
+			int nextInt = rnd.nextInt(total);
+			int y = nextInt / grid.getWidth();
+			int x = nextInt - y * grid.getWidth();
+			if (grid.is(CellType.EMPTY, x, y)) {
+				grid.addTo(new SpawnerCell(x, y, new GameObjectFactory() {
+					@Override
+					public GameObject newObject(SpawnerCell spawner, GrowGame game) {
+						return new Necromonger(spawner.getX(), spawner.getY());
+					}
+				}));
+			}
+		}
 	}
 }

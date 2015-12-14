@@ -2,6 +2,7 @@ package com.zealouscoder.grow;
 
 import java.awt.Graphics2D;
 
+import com.zealouscoder.grow.animals.Necromonger;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowingCell;
 
@@ -18,5 +19,7 @@ public interface RenderVisitor {
 	public void render(EmptyCell emptyCell);
 
 	public void render(Player player);
+
+	public void render(Necromonger necromonger);
 	
 }

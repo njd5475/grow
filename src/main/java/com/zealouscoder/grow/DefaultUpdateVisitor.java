@@ -2,6 +2,7 @@ package com.zealouscoder.grow;
 
 import java.awt.event.KeyEvent;
 
+import com.zealouscoder.grow.animals.Necromonger;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
@@ -32,6 +33,10 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 			obj.update(dt, this);
 		}
 		growGame.drainSpawnQueue();
+		
+		if(growGame.hasLife() && growGame.getGameClock() > 60d && growGame.deathHasEmerged()) {
+			growGame.makeDeath();
+		}
 	}
 
 	@Override
@@ -92,6 +97,12 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 		if(go != null) {
 			game.add(go);
 		}
+	}
+
+	@Override
+	public void update(double dt, Necromonger necromonger) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

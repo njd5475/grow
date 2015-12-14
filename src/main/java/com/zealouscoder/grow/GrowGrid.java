@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.zealouscoder.grow.cells.CellContainer;
+import com.zealouscoder.grow.cells.CellType;
 import com.zealouscoder.grow.cells.GrowCell;
 
 public class GrowGrid extends GameObject {
@@ -90,5 +91,9 @@ public class GrowGrid extends GameObject {
 
 	public int getHeight() {
 		return maxY - minY + 1;
+	}
+
+	public boolean is(CellType type, int x, int y) {
+		return getAt(x,y).getType() == type;
 	}
 }

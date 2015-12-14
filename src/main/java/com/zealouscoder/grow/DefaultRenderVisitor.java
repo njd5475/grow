@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import com.zealouscoder.grow.animals.Necromonger;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
@@ -104,6 +105,16 @@ public class DefaultRenderVisitor implements RenderVisitor {
 				GrowCell.HEIGHT + 1);
 		n.dispose();
 	}
+	
+
+	@Override
+	public void render(Necromonger monger) {
+		Graphics2D n = (Graphics2D) g.create();
+		center(n);
+		n.setColor(Color.red);
+		n.drawOval((int)monger.getX(), (int)monger.getY(), GrowCell.WIDTH, GrowCell.HEIGHT);
+		n.dispose();
+	}
 
 	private void drawPlayerGoals(Player player) {
 		hudOverlay.setColor(Color.blue);
@@ -115,7 +126,7 @@ public class DefaultRenderVisitor implements RenderVisitor {
 	public void setGraphics(Graphics2D g2d) {
 		this.g = g2d;
 	}
-
+	
 	private void translateToCentered(Graphics2D n, GrowCell cell) {
 		n.translate(cell.getX() * GrowCell.WIDTH, cell.getY() * GrowCell.HEIGHT);
 		n.translate(GrowCell.WIDTH / 2d, GrowCell.HEIGHT / 2d);
@@ -133,4 +144,5 @@ public class DefaultRenderVisitor implements RenderVisitor {
 	private void translateToPlayer(Graphics2D n, Player player) {
 		n.translate(-player.getX() * GrowCell.HEIGHT, -player.getY() * GrowCell.WIDTH);
 	}
+
 }
