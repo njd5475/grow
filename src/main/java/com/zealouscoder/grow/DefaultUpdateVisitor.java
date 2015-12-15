@@ -98,6 +98,7 @@ public class DefaultUpdateVisitor implements UpdateVisitor {
 	public void update(double dt, SpawnerCell spawnerCell) {
 		GameObject go = spawnerCell.spawn(dt, game);
 		if (go != null) {
+			System.out.println("Spawning baddy");
 			game.add(go);
 		}
 	}

@@ -7,6 +7,7 @@ import com.zealouscoder.grow.cells.CellContainer;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowingCell;
 import com.zealouscoder.grow.cells.LifeCell;
+import com.zealouscoder.grow.cells.SpawnerCell;
 
 public interface RenderVisitor {
 
@@ -27,5 +28,7 @@ public interface RenderVisitor {
 	public void render(CellContainer cellContainer);
 
 	public void render(LifeCell lifeCell);
+
+	public void render(SpawnerCell spawnerCell);
 	
 }

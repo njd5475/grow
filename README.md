@@ -24,6 +24,6 @@ If you do not place life in the first 60 seconds NecroMonger's will start spawni
 * ** BUG SQUASH PHASE **
 
 Bugs:
-* NecroMonger cells do not have the capability to exist
+* NecroMonger cells do not have the capability to exist ** This capability has been added **
 * The render and update loops do not have the capability to iterate over all
   the cells in the grid simultaneously. **This capability has been added**

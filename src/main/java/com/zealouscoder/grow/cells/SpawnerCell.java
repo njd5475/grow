@@ -24,6 +24,14 @@ public class SpawnerCell extends GrowCell {
 		return spawned;
 	}
 
+	public void setRepeating() {
+		repeat = true;
+	}
+	
+	public void setNonRepeating() {
+		repeat = false;
+	}
+	
 	public boolean repeats() {
 		return repeat;
 	}
@@ -43,7 +51,7 @@ public class SpawnerCell extends GrowCell {
 
 	@Override
 	public void render(RenderVisitor visitor) {
-		// does not render
+		visitor.render(this);
 	}
 
 	@Override
@@ -54,9 +62,13 @@ public class SpawnerCell extends GrowCell {
 	public GameObject spawn(double dt, GrowGame game) {
 		if (active) {
 			GameObject go = null;
+			timeToSpawn -= dt;
+			
 			if(timeToSpawn <= 0 && (repeat || spawned <= 0)) {
 				go = factory.newObject(this, game);
 				++spawned;
+				
+				//reset timer
 				if(repeat) {
 					timeToSpawn = rate;
 				}

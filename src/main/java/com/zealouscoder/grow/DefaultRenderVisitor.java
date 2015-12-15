@@ -11,6 +11,7 @@ import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
 import com.zealouscoder.grow.cells.LifeCell;
+import com.zealouscoder.grow.cells.SpawnerCell;
 
 public class DefaultRenderVisitor implements RenderVisitor {
 
@@ -31,6 +32,9 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		hudOverlay = (Graphics2D) g.create();
 		this.game = game;
 		game.getGrid().render(this);
+		for(GameObject object : game.getObjects()) {
+			object.render(this);
+		}
 		render(game.getCurrentPlayer());
 		drawGameClock(game);
 		drawControls();
@@ -113,8 +117,9 @@ public class DefaultRenderVisitor implements RenderVisitor {
 	public void render(Necromonger monger) {
 		Graphics2D n = (Graphics2D) g.create();
 		center(n);
+		n.translate(monger.getX(), monger.getY());
 		n.setColor(Color.red);
-		n.drawOval((int)monger.getX(), (int)monger.getY(), GrowCell.WIDTH, GrowCell.HEIGHT);
+		n.fillOval(0, 0, GrowCell.WIDTH, GrowCell.HEIGHT);
 		n.dispose();
 	}
 
@@ -161,6 +166,16 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		n.setColor(Color.gray.darker());
 		translateTo(n, lifeCell);
 		n.fillRect(0, 0, lifeCell.getWidth(), lifeCell.getHeight());
+		n.dispose();
+	}
+
+	@Override
+	public void render(SpawnerCell spawnerCell) {
+		Graphics2D n = (Graphics2D) g.create();
+		center(n);
+		n.setColor(Color.cyan);
+		translateTo(n, spawnerCell);
+		n.fillRect(0, 0, 10, 10);
 		n.dispose();
 	}
 

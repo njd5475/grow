@@ -196,10 +196,11 @@ public class GrowGame extends GameObject {
 				SpawnerCell spawner = new SpawnerCell(x, y, new GameObjectFactory() {
 					@Override
 					public GameObject newObject(SpawnerCell spawner, GrowGame game) {
-						return new Necromonger(spawner.getX(), spawner.getY());
+						return new Necromonger(spawner.getX()*GrowCell.WIDTH, spawner.getY()*GrowCell.HEIGHT);
 					}
 				});
-				spawner.reset(rnd.nextInt(30)+10);
+				spawner.setRepeating();
+				spawner.reset(rnd.nextInt(10)+10);
 				spawner.activate();
 				grid.addTo(spawner);
 				System.out.println("Created spawner");
