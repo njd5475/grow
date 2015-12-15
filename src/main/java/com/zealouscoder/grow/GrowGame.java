@@ -218,4 +218,8 @@ public class GrowGame extends GameObject {
 		}
 		return null;
 	}
+
+	public boolean is(int x, int y, CellType empty) {
+		return grid.is(empty, x, y);
+	}
 }

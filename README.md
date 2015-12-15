@@ -3,3 +3,19 @@ Simple Cell Based Growing Game
 
 # To Run
 Compile and run GrowGridGrow class
+
+# Development
+Development will be done in phases each phase consisting of the following
+
+* Identity defects and enhancements design new game mechanics
+* Work the defects
+* Work on enhancements (this includes new content)
+* Work on new game mechanics
+* Polish graphics and interfaces
+* Rinse, Release, Repeat
+
+# Design
+
+The grid of empty cells expands at a set rate this expansion creates more and more empty cells. Only empty cells can have life placed on them. You can place life as it is the item you start with in your inventory. You inventory contains a single item. You have goals to achieve in the game the first goal being to place life.
+
+If you do not place life in the first 60 seconds NecroMonger's will start spawning and find and devour you.

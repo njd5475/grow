@@ -15,6 +15,7 @@ public class GrowGrid extends GameObject {
 	private int maxY = Integer.MIN_VALUE;
 	private int minY = Integer.MAX_VALUE;
 	private boolean hasLife;
+	private Object cellsLock = new Object();
 
 	public GrowGrid() {
 
@@ -61,16 +62,19 @@ public class GrowGrid extends GameObject {
 		minX = Math.min(minX, x);
 		maxY = Math.max(maxY, y);
 		minY = Math.min(minY, y);
-		if(cell.isAlive()) {
+		if (cell.isAlive()) {
 			hasLife = true;
 		}
-		cells.put(calcIndex(x, y), cell);
+		synchronized (cellsLock) {
+			cells.put(calcIndex(x, y), cell);
+			cellsLock.notifyAll();
+		}		
 	}
 
 	public boolean hasLife() {
 		return hasLife;
 	}
-	
+
 	@Override
 	public void update(double dt, UpdateVisitor visitor) {
 		visitor.update(dt, this);
@@ -82,7 +86,12 @@ public class GrowGrid extends GameObject {
 	}
 
 	public synchronized GrowCell[] getCells() {
-		return cells.values().toArray(new GrowCell[cells.size()]);
+		GrowCell[] allCells = null;
+		synchronized (cellsLock) {
+			allCells = cells.values().toArray(new GrowCell[cells.size()]);
+			cellsLock.notifyAll();
+		}
+		return allCells;
 	}
 
 	public boolean hasCell(GrowCell cell) {
