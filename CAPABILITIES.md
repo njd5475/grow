@@ -6,6 +6,9 @@ List of missing capabilities
 * NecroMonger cells do not have the capability to exist
 * The render and update loops do not have the capability to iterate over all
   the cells in the grid simultaneously. **This capability has been added**
+* The user has the capability to watch the grid expand like darkness being pealed away by light,
+	where the void is a mess of black and deep dark purple dots and the edges of the grid are 
+	wavy solid curves like a cloud that is smoothly moving outward.
 
 List of current capabilities
 
