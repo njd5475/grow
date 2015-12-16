@@ -7,12 +7,12 @@ Compile and run GrowGridGrow class
 # Development
 Development will be done in phases each phase consisting of the following
 
-* Identity defects and enhancements design new game mechanics ** ID Phase **
-* Work the defects ** BUG SQUASH PHASE **
-* Work on enhancements (this includes new content) ** BUILD PHASE **
-* Work on new game mechanics ** BRAINSTORM PHASE **
-* Polish graphics and interfaces ** SPIT SHINE PHASE **
-* Rinse, Release, Repeat ** RELEASE PHASE **
+* Identity defects and enhancements design new game mechanics __ID Phase__
+* Work the defects __BUG SQUASH PHASE__
+* Work on enhancements (this includes new content) __BUILD PHASE__
+* Work on new game mechanics __BRAINSTORM PHASE__
+* Polish graphics and interfaces __SPIT SHINE PHASE__
+* Rinse, Release, Repeat __RELEASE PHASE__
 
 # Design
 
