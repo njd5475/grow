@@ -2,6 +2,7 @@
 
 List of missing capabilities
 
+* Coder should have the capability to create new rendering methods for cells depending on their surroundings.
 * Life cells need the capability to build up energy and to build up the energy of neighboring cells.
 * Player has the capability to achieve goals and see that they have achieved the goal as well as get rewarded for achieving the goal.
 * Player has the capability to choose when they want to start playing the game as well as being able to pause the game at any time.

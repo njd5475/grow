@@ -6,7 +6,7 @@ import com.zealouscoder.grow.UpdateVisitor;
 public class GrowingCell extends GrowCell {
 
 	// default in seconds
-	private double growRate = 1;
+	private double growRate = 0.5;
 	private double timeToGrow;
 	private double TotalTimeToGrow;
 
@@ -51,6 +51,10 @@ public class GrowingCell extends GrowCell {
 	@Override
 	public boolean isPassable() {
 		return true;
+	}
+
+	public double getPercentageGrown() {
+		return timeToGrow / TotalTimeToGrow;
 	}
 
 }

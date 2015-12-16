@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import com.zealouscoder.grow.animals.Necromonger;
 import com.zealouscoder.grow.cells.CellContainer;
+import com.zealouscoder.grow.cells.CellType;
 import com.zealouscoder.grow.cells.EmptyCell;
 import com.zealouscoder.grow.cells.GrowCell;
 import com.zealouscoder.grow.cells.GrowingCell;
@@ -32,7 +33,7 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		hudOverlay = (Graphics2D) g.create();
 		this.game = game;
 		game.getGrid().render(this);
-		for(GameObject object : game.getObjects()) {
+		for (GameObject object : game.getObjects()) {
 			object.render(this);
 		}
 		render(game.getCurrentPlayer());
@@ -87,8 +88,51 @@ public class DefaultRenderVisitor implements RenderVisitor {
 		Graphics2D n = (Graphics2D) g.create();
 		center(n);
 		n.setColor(Color.white);
-		translateToCentered(n, cell);
-		n.fillRect(-cell.getWidth() / 2, -cell.getHeight() / 2, cell.getWidth(), cell.getHeight());
+		if (game.is(cell.getX() + 1, cell.getY(), CellType.GROWING) && !game.hasCell(cell.getX(), cell.getY() - 1)
+				&& game.hasCellEastAndWest(cell)) {
+			// top
+			int y = GrowCell.HEIGHT - cell.getHeight();
+			translateTo(n, cell);
+			n.drawLine(0, y, GrowCell.WIDTH, y);
+		} else if (game.is(cell.getX() + 1, cell.getY(), CellType.GROWING)
+				&& !game.hasCell(cell.getX(), cell.getY() + 1) && game.hasCellEastAndWest(cell)) {
+			// bottom
+			int y = cell.getHeight();
+			translateTo(n, cell);
+			n.drawLine(0, y, GrowCell.WIDTH, y);
+		} else if (game.is(cell.getX(), cell.getY() + 1, CellType.GROWING)
+				&& !game.hasCell(cell.getX() + 1, cell.getY()) && game.hasCellNorthAndSouth(cell)) {
+			// right
+			int x = cell.getWidth();
+			translateTo(n, cell);
+			n.drawLine(x, 0, x, GrowCell.HEIGHT);
+		} else if (game.is(cell.getX(), cell.getY() + 1, CellType.GROWING)
+				&& !game.hasCell(cell.getX() - 1, cell.getY()) && game.hasCellNorthAndSouth(cell)) {
+			// left
+			int x = GrowCell.WIDTH - cell.getWidth();
+			translateTo(n, cell);
+			n.drawLine(x, 0, x, GrowCell.HEIGHT);
+		} else if (!game.hasCellNorth(cell) && !game.hasCellWest(cell)) {
+			// top left
+			translateTo(n, cell);
+			n.drawRect(GrowCell.WIDTH - cell.getWidth(), GrowCell.HEIGHT - cell.getHeight(), cell.getWidth(),
+					cell.getHeight());
+		} else if (!game.hasCellNorth(cell) && !game.hasCellEast(cell)) {
+			// top right
+			translateTo(n, cell);
+			n.drawRect(0, GrowCell.HEIGHT - cell.getHeight(), cell.getWidth(), cell.getHeight()+1);
+		} else if (!game.hasCellSouth(cell) && !game.hasCellWest(cell)) {
+			// bottom left
+			translateTo(n, cell);
+			n.drawRect(GrowCell.WIDTH-cell.getWidth(), 0, cell.getWidth(), cell.getHeight());
+		} else if(!game.hasCellSouth(cell) && !game.hasCellEast(cell)) {
+			// bottom right
+			translateTo(n, cell);
+			n.drawRect(0, 0, cell.getWidth(), cell.getHeight());
+		} else {
+			translateToCentered(n, cell);
+			n.fillRect(-cell.getWidth() / 2, -cell.getHeight() / 2, cell.getWidth(), cell.getHeight());
+		}
 		n.dispose();
 	}
 
@@ -111,7 +155,6 @@ public class DefaultRenderVisitor implements RenderVisitor {
 				GrowCell.HEIGHT + 1);
 		n.dispose();
 	}
-	
 
 	@Override
 	public void render(Necromonger monger) {
@@ -133,7 +176,7 @@ public class DefaultRenderVisitor implements RenderVisitor {
 	public void setGraphics(Graphics2D g2d) {
 		this.g = g2d;
 	}
-	
+
 	private void translateToCentered(Graphics2D n, GrowCell cell) {
 		n.translate(cell.getX() * GrowCell.WIDTH, cell.getY() * GrowCell.HEIGHT);
 		n.translate(GrowCell.WIDTH / 2d, GrowCell.HEIGHT / 2d);
@@ -154,7 +197,7 @@ public class DefaultRenderVisitor implements RenderVisitor {
 
 	@Override
 	public void render(CellContainer cellContainer) {
-		for(GrowCell cell : cellContainer.getCells()) {
+		for (GrowCell cell : cellContainer.getCells()) {
 			cell.render(this);
 		}
 	}

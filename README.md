@@ -21,6 +21,6 @@ The grid of empty cells expands at a set rate this expansion creates more and mo
 If you do not place life in the first 60 seconds NecroMonger's will start spawning and find and devour you.
 
 # Current Phase
-* ** BUILD PHASE **
+__SPIT SHINE PHASE__
 
-Enhancements:
+Enhancing grid growing graphics.

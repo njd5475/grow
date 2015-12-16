@@ -158,14 +158,14 @@ public class GrowGame extends GameObject {
 
 	public GrowCell swapFor(CellType type, int x, int y) {
 		GrowCell newCell = createCell(type, x, y);
-		swap(grid.getAt(x,y), newCell);
+		swap(grid.getAt(x, y), newCell);
 		return newCell;
 	}
 
 	public void add(GameObject go) {
 		spawnQueue.add(go);
 	}
-	
+
 	public void placeItem(Player player) {
 		player.useItem(this);
 	}
@@ -179,8 +179,8 @@ public class GrowGame extends GameObject {
 	}
 
 	public void makeDeath() {
-		int width = grid.getWidth()-1;
-		int height = grid.getHeight()-1;
+		int width = grid.getWidth() - 1;
+		int height = grid.getHeight() - 1;
 		int total = width * height;
 		double percentageOfTotal = total * 0.1d;
 		int num = (int) Math.ceil(percentageOfTotal);
@@ -190,17 +190,17 @@ public class GrowGame extends GameObject {
 			int nextInt = rnd.nextInt(total);
 			int y = nextInt / width;
 			int x = nextInt - y * width;
-			x -= width/2;
-			y -= height/2;
+			x -= width / 2;
+			y -= height / 2;
 			if (grid.is(CellType.EMPTY, x, y)) {
 				SpawnerCell spawner = new SpawnerCell(x, y, new GameObjectFactory() {
 					@Override
 					public GameObject newObject(SpawnerCell spawner, GrowGame game) {
-						return new Necromonger(spawner.getX()*GrowCell.WIDTH, spawner.getY()*GrowCell.HEIGHT);
+						return new Necromonger(spawner.getX() * GrowCell.WIDTH, spawner.getY() * GrowCell.HEIGHT);
 					}
 				});
 				spawner.setRepeating();
-				spawner.reset(rnd.nextInt(10)+10);
+				spawner.reset(rnd.nextInt(10) + 10);
 				spawner.activate();
 				grid.addTo(spawner);
 				System.out.println("Created spawner");
@@ -208,7 +208,7 @@ public class GrowGame extends GameObject {
 		}
 		deathEmerged = true;
 	}
-	
+
 	private static GrowCell createCell(CellType type, int x, int y) {
 		Constructor<? extends GrowCell> k;
 		try {
@@ -222,5 +222,33 @@ public class GrowGame extends GameObject {
 
 	public boolean is(int x, int y, CellType empty) {
 		return grid.is(empty, x, y);
+	}
+
+	public boolean is(GrowCell cell, CellType empty) {
+		return grid.is(empty, cell.getX(), cell.getY());
+	}
+
+	public boolean hasCellEastAndWest(GrowingCell cell) {
+		return hasCell(cell.getX() + 1, cell.getY()) && hasCell(cell.getX() - 1, cell.getY());
+	}
+
+	public boolean hasCellNorthAndSouth(GrowingCell cell) {
+		return hasCell(cell.getX(), cell.getY() + 1) && hasCell(cell.getX(), cell.getY() - 1);
+	}
+
+	public boolean hasCellNorth(GrowingCell cell) {
+		return hasCell(cell.getX(), cell.getY() - 1);
+	}
+
+	public boolean hasCellWest(GrowingCell cell) {
+		return hasCell(cell.getX() - 1, cell.getY());
+	}
+
+	public boolean hasCellEast(GrowingCell cell) {
+		return hasCell(cell.getX() + 1, cell.getY());
+	}
+
+	public boolean hasCellSouth(GrowingCell cell) {
+		return hasCell(cell.getX(), cell.getY() + 1);
 	}
 }
